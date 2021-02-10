@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class LogicService {
+class TokenTimeValidationService {
 
     @Autowired
     private lateinit var kieContainer: KieContainer;
 
-    fun applyLogic(input: Input): Output {
+    fun validate(input: Input): Output {
         val kieSession = kieContainer.newStatelessKieSession("rulesSession")
         val wrapper = DroolsWrapper(input, Output())
         kieSession.execute(wrapper)

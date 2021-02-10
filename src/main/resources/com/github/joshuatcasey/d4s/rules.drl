@@ -1,11 +1,14 @@
 import com.github.joshuatcasey.d4s.DroolsWrapper
+import com.github.joshuatcasey.d4s.Input
 import com.github.joshuatcasey.d4s.Output
 
 dialect  "mvel"
 
-rule "double the input"
+rule "valid if has input"
   when
-    $wrapper : DroolsWrapper( input != null )
+    $wrapper : DroolsWrapper( )
+    $input : Input( ) from $wrapper.input
+    $output : Output( valid == false ) from $wrapper.output
   then
-    $wrapper.setOutput(new Output(false));
+    $output.setValid(true);
 end

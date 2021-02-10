@@ -8,7 +8,7 @@ data class Input(
 )
 
 data class Output(
-    val valid: Boolean = false,
+    var valid: Boolean = false,
 )
 
 data class DroolsWrapper(

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class Controller(
-    val logicService: LogicService,
+    val tokenTimeValidationService: TokenTimeValidationService,
 ) {
     @PostMapping("/validate")
-    fun greeting(@RequestBody input: Input) = logicService.applyLogic(input)
+    fun greeting(@RequestBody input: Input) = tokenTimeValidationService.validate(input)
 }
