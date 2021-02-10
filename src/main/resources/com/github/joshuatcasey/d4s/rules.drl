@@ -7,5 +7,5 @@ rule "double the input"
   when
     $wrapper : DroolsWrapper( input != null )
   then
-    $wrapper.setOutput(new Output(2 * $wrapper.input.getSomething()));
+    $wrapper.setOutput(new Output(false));
 end

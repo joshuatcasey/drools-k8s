@@ -12,8 +12,8 @@ class LogicService {
 
     fun applyLogic(input: Input): Output {
         val kieSession = kieContainer.newStatelessKieSession("rulesSession")
-        val wrapper = DroolsWrapper(input, null)
+        val wrapper = DroolsWrapper(input, Output())
         kieSession.execute(wrapper)
-        return wrapper.output ?: throw RuntimeException("drools did not work")
+        return wrapper.output
     }
 }
