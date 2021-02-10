@@ -1,0 +1,11 @@
+import com.github.joshuatcasey.d4s.DroolsWrapper
+import com.github.joshuatcasey.d4s.Output
+
+dialect  "mvel"
+
+rule "double the input"
+  when
+    $wrapper : DroolsWrapper( input != null )
+  then
+    $wrapper.setOutput(new Output(2 * $wrapper.input.getSomething()));
+end

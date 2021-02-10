@@ -18,6 +18,10 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.drools:drools-core:7.48.0.Final")
+	implementation("org.drools:drools-compiler:7.48.0.Final")
+	implementation("org.kie:kie-spring:7.48.0.Final")
+	implementation("org.kie:kie-api:7.48.0.Final")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -32,4 +36,8 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	testLogging {
+		outputs.upToDateWhen {false}
+		showStandardStreams = true
+	}
 }
