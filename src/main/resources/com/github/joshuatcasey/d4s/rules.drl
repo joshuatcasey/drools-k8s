@@ -2,13 +2,59 @@ import com.github.joshuatcasey.d4s.DroolsWrapper
 import com.github.joshuatcasey.d4s.Input
 import com.github.joshuatcasey.d4s.Output
 
+global org.apache.commons.logging.Log rulesLogger
+
 dialect  "mvel"
 
-rule "valid if has input"
+rule "valid if no constraints"
   when
     $wrapper : DroolsWrapper( )
-    $input : Input( ) from $wrapper.input
+    $input : Input( exp == null && iat == null && nbf == null) from $wrapper.input
     $output : Output( valid == false ) from $wrapper.output
   then
+    rulesLogger.info(getRule().getName());
     $output.setValid(true);
+end
+
+rule "time >= iat"
+  when
+    $wrapper : DroolsWrapper( )
+    $input : Input(
+        exp == null,
+        nbf == null,
+        iat != null,
+        time >= iat ) from $wrapper.input
+    $output : Output( valid == false ) from $wrapper.output
+  then
+    rulesLogger.info(getRule().getName());
+    $output.setValid(true);
+end
+
+rule "iat > time"
+  when
+    $wrapper : DroolsWrapper( )
+    $input : Input(
+        iat != null,
+        iat > time ) from $wrapper.input
+    $output : Output( valid == false ) from $wrapper.output
+  then
+    rulesLogger.info(getRule().getName());
+    $output.getErrors().add(getRule().getName());
+end
+
+rule "iat <= nbf <= time <= exp"
+  when
+    $wrapper : DroolsWrapper( )
+    $input : Input(
+        iat != null,
+        nbf != null,
+        exp != null,
+        exp >= time,
+        time >= nbf,
+        nbf >= iat) from $wrapper.input
+    $output : Output( valid == false ) from $wrapper.output
+  then
+    rulesLogger.info(getRule().getName());
+    $output.setValid(true);
+    $output.getErrors().clear();
 end
